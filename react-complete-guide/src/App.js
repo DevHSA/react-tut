@@ -4,8 +4,8 @@ import './App.css';
 import Person from './Person/Person'
 
 
-class App extends Component {
 
+class App extends Component {
 
   state = { 
     persons: [
@@ -15,8 +15,6 @@ class App extends Component {
     ],
     otherState: 'something else'
   }
-
-  
 
   switchNameHandler = (nameClicked) => {
      this.setState({
@@ -43,14 +41,27 @@ class App extends Component {
 
   }
 
-
   render () {
+
+    const style1 = {
+
+      backgroundColor: 'white',
+      font: 'inherit',
+      border: '1px solid blue',
+      padding: '8px',
+      cursor: 'pointer'
+
+    };
+
+
     return(
 
       <div className="App" >
         <h1>Hi Harish Here</h1>
         <p>This is really working!</p>
-        <button onClick={ this.switchNameHandler.bind(this, 'Good') }>Switch Names</button>
+        <button 
+          style={style1}
+          onClick={ this.switchNameHandler.bind(this, 'Good') }>Switch Names</button>
         <Person 
           name={this.state.persons[0].name} 
           age={this.state.persons[0].name} />
@@ -64,6 +75,8 @@ class App extends Component {
           age={this.state.persons[2].name} />
       </div>
     )
+
+
   }
 
 
