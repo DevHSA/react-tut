@@ -1,6 +1,7 @@
 import React from 'react';
 import logo from './logo.svg';
-import Radium from 'radium';
+import Styled from 'styled-components'
+
 import './App.css';
 import Person from './Person/Person'
 
@@ -113,8 +114,10 @@ class App extends React.Component {
 
     return(
 
-      <Radium.StyleRoot>
+      
       <div className="App" >
+
+      
         <h1>Hi Harish Here</h1>
         <p className={classes.join(' ')}>This is really working!</p>
         <button 
@@ -122,13 +125,13 @@ class App extends React.Component {
           onClick={this.togglePersonsHandler}>Toggle Persons</button>
           {persons}
       </div>
-      </Radium.StyleRoot>
+      
     )
   }
 }
 
 
-export default Radium(App);
+export default App;
 
 
 /*
