@@ -30,7 +30,7 @@ class App extends React.Component {
       { id: 'id3', name: 'Stephanie', age: 28 }
     ],
     otherState: 'something else',
-    showPersons: false
+    showPersons: false  
   }
 
 
