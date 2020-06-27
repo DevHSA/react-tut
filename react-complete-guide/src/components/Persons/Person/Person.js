@@ -5,9 +5,7 @@ import "./Person.css";
 const person = (props) => {
   const rnd = Math.random();
 
-  if (rnd > 0.7) {
-    throw new Error("Something Went Wrong");
-  }
+  
   return (
     <div className="Person">
       <p onClick={props.click}>

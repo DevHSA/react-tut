@@ -1,8 +1,9 @@
 import React from "react";
 import logo from "./logo.svg";
 import "./App.css";
-import Person from "./Person/Person";
-import ErrorBoundary from './ErrorBoundary/ErrorBoundary';
+import Person from "./components/Persons/Person/Person";
+import Persons from './components/Persons/Persons'
+
 class App extends React.Component {
   state = {
     persons: [
@@ -42,26 +43,31 @@ class App extends React.Component {
   render() {
     let persons = null;
     let buttonClass = "button";
-  
 
     if (this.state.showPersons) {
       buttonClass = "buttonRed";
       persons = (
         <div>
-          {this.state.persons.map((person, index) => {
-            return (
 
-              <ErrorBoundary key={person.id}>
+          <Persons 
+          
+            persons={this.}
+            clicked={}
+            changed={}
+          
+          />
+
+          {/* {this.state.persons.map((person, index) => {
+            return (
               <Person
                 click={() => this.deletePersonHandler(index)}
                 name={person.name}
                 age={person.age}
-                
+                key={person.id}
                 changed={(event) => this.nameChangedHandler(event, person.id)}
               />
-              </ErrorBoundary>
             );
-          })}
+          })} */}
         </div>
       );
 
