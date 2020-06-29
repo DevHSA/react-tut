@@ -51,9 +51,9 @@ class App extends React.Component {
 
           <Persons 
           
-            persons={this.}
-            clicked={}
-            changed={}
+            persons={this.state.persons}
+            clicked={this.deletePersonHandler}
+            changed={this.nameChangedHandler}
           
           />
 
