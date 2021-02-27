@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Button from '../../../components/UI/Button/Button' 
 import classes from './ContactData.module.css'
-
+import axios from '../../../axios-orders'
 export class ContactData extends Component {
 
     state= {
@@ -22,11 +22,11 @@ export class ContactData extends Component {
         event.preventDefault();
         console.log(this.props.ingredients)
 
-         alert('You continue!');
+        //  alert('You continue!');
         this.setState({ loading: true });
         const order = {
             ingredients: this.props.ingredients,
-            price: this.state.totalPrice,
+            price: this.props.price,
             customer: {
                 name: 'Max Schwarzmüller',
                 address: {
@@ -40,10 +40,10 @@ export class ContactData extends Component {
         }
         axios.post('/orders.json', order)
             .then(response => {
-                this.setState({ loading: false, purchasing: false });
+                this.setState({ loading: false });
             })
             .catch(error => {
-                this.setState({ loading: false, purchasing: false });
+                this.setState({ loading: false });
             });
 
     }
