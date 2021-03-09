@@ -9,7 +9,8 @@ export class ContactData extends Component {
   state = {
     X: 0,
     Y: 0,
-    display: 'none',
+    display: "none",
+
     orderForm: {
       name: {
         elementType: "input",
@@ -98,37 +99,39 @@ export class ContactData extends Component {
       });
   };
 
-
-  closeHover = (event) =>{
-
-    console.log("Close Hover",event);
+  closeHover = (event) => {
+    console.log("Close Hover", event);
 
     this.setState({
-      display: 'none'
-    })
-    
-    
-  }
+      display: "none",
+    });
+  };
 
-  openHover = (event) =>{
-
-    console.log("Open Hover",event)
+  openHover = (event) => {
+    console.log("Open Hover", event);
     this.setState({
       X: event.clientX,
       Y: event.clientY,
-      display: 'block'
-    })
-    
-  }
-
-
+      display: "block",
+    });
+  };
 
   render() {
+    let formArray = Object.keys(this.state.orderForm).map((item) => {
+      return (
+        <Input
+          key={item}
+          elementType={this.state.orderForm[item].elementType}
+          elementConfig={this.state.orderForm[item].elementConfig}
+          value={this.state.orderForm[item].value}
+        />
+      );
+    });
+
     let form = (
       <form>
-
-
-
+        {formArray}
+        {/* 
         <Input
           elementType="..." 
           elementConfig="..."
@@ -152,12 +155,11 @@ export class ContactData extends Component {
           type="text"
           name="postal"
           placeholder="Postal Code"
-        />
+        /> */}
 
         <Button btnType="Success" clicked={this.orderHandler}>
           ORDER
         </Button>
-        
       </form>
     );
 
@@ -166,14 +168,27 @@ export class ContactData extends Component {
     }
 
     return (
-      <div className={classes.ContactData} onMouseMove={(event)=> this.openHover(event)} onMouseLeave={(event)=>this.closeHover(event)}>
-          <p>{this.state.X}</p>
-          <p>{this.state.Y}</p>
-          <div style={{border:'1px solid', position:'fixed', top:this.state.X, left: this.state.Y, padding:'10px', display: this.state.display,}}>
-            Test Hover
-          </div>
-          
-          <h4>Enter Your Contact Data</h4>
+      <div
+        className={classes.ContactData}
+        onMouseMove={(event) => this.openHover(event)}
+        onMouseLeave={(event) => this.closeHover(event)}
+      >
+        <p>{this.state.X}</p>
+        <p>{this.state.Y}</p>
+        <div
+          style={{
+            border: "1px solid",
+            position: "fixed",
+            top: this.state.Y + 20,
+            left: this.state.X + 20,
+            padding: "10px",
+            display: this.state.display,
+          }}
+        >
+          Test Hover
+        </div>
+
+        <h4>Enter Your Contact Data</h4>
         {form}
       </div>
     );

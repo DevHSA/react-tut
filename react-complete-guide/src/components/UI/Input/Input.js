@@ -14,13 +14,30 @@ const Input = (props) => {
         />
       );
       break;
-    case "textarea":
+      case "textarea":
+        inputElement = (
+          <textarea
+            className={classes.InputElement}
+            {...props}
+            value={props.value}
+          />
+        );
+        break;
+        case "select":
       inputElement = (
-        <textarea
+        <select
           className={classes.InputElement}
           {...props}
           value={props.value}
-        />
+        >
+
+        {props.elementConfig.options.map(item=> {
+
+          return <option value={item.value}>{item.displayValue}</option>
+        })}
+
+
+        </select>
       );
       break;
     default:
