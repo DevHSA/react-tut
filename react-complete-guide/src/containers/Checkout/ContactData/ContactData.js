@@ -71,6 +71,15 @@ export class ContactData extends Component {
     event.preventDefault();
     console.log(this.props.ingredients);
 
+    const formData = {};
+
+    for(let element in this.state.orderForm){
+
+       formData[element] = this.state.orderForm[element].value
+
+    }
+
+      console.log(formData)
     //  alert('You continue!');
     this.setState({ loading: true });
     const order = {
@@ -116,6 +125,32 @@ export class ContactData extends Component {
     });
   };
 
+  inputChangedHandler = (event, inputIdentifier) => {
+
+   
+
+    const updatedFormData = {
+        ...this.state.orderForm
+    }
+
+    const updatedInputData = {
+
+      ...updatedFormData[inputIdentifier]
+
+    }
+
+    updatedInputData.value = event.target.value;
+    updatedFormData[inputIdentifier] = updatedInputData;
+
+
+    this.setState({
+
+      orderForm: updatedFormData
+
+    })
+  }
+
+
   render() {
     let formArray = Object.keys(this.state.orderForm).map((item) => {
       return (
@@ -124,12 +159,13 @@ export class ContactData extends Component {
           elementType={this.state.orderForm[item].elementType}
           elementConfig={this.state.orderForm[item].elementConfig}
           value={this.state.orderForm[item].value}
+          changed={(event) => this.inputChangedHandler(event, item)}
         />
       );
     });
 
     let form = (
-      <form>
+      <form onSubmit={this.orderHandler}>
         {formArray}
         {/* 
         <Input
@@ -157,7 +193,7 @@ export class ContactData extends Component {
           placeholder="Postal Code"
         /> */}
 
-        <Button btnType="Success" clicked={this.orderHandler}>
+        <Button btnType="Success" >
           ORDER
         </Button>
       </form>
