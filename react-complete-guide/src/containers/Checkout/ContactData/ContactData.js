@@ -19,6 +19,12 @@ export class ContactData extends Component {
           placeholder: "Your Name",
         },
         value: "",
+        validation: {
+          required:true,
+        },
+        valid: false,
+        touched: false
+
       },
       street: {
         elementType: "input",
@@ -27,6 +33,11 @@ export class ContactData extends Component {
           placeholder: "Street",
         },
         value: "",
+        validation: {
+          required:true,
+        },
+        valid: false
+
       },
       zipCode: {
         elementType: "input",
@@ -35,6 +46,14 @@ export class ContactData extends Component {
           placeholder: "Zip Code",
         },
         value: "",
+        validation: {
+          required:true,
+          minLength:5,
+          maxLength:5,
+        },
+        valid: false,
+        touched: false
+
       },
       country: {
         elementType: "input",
@@ -43,6 +62,12 @@ export class ContactData extends Component {
           placeholder: "Country",
         },
         value: "",
+        validation: {
+          required:true,
+        },
+        valid: false,
+        touched: false
+
       },
       email: {
         elementType: "input",
@@ -51,6 +76,11 @@ export class ContactData extends Component {
           placeholder: "Your E-Mail",
         },
         value: "",
+        validation: {
+          required:true,
+        },
+        valid: false,
+        touched: false
       },
       deliveryMethod: {
         elementType: "select",
@@ -60,10 +90,14 @@ export class ContactData extends Component {
             { value: "Cheapest", displayValue: "Cheapest" },
           ],
         },
+        validation:{ },
+        valid: true,
         value: "",
+        
       },
     },
-
+    
+    isFormValid: false,
     loading: false,
   };
 
@@ -109,7 +143,7 @@ export class ContactData extends Component {
   };
 
   closeHover = (event) => {
-    console.log("Close Hover", event);
+    // console.log("Close Hover", event);
 
     this.setState({
       display: "none",
@@ -117,13 +151,34 @@ export class ContactData extends Component {
   };
 
   openHover = (event) => {
-    console.log("Open Hover", event);
+    // console.log("Open Hover", event);
     this.setState({
       X: event.clientX,
       Y: event.clientY,
       display: "block",
     });
   };
+
+ checkValidity = (value,rules) => {
+
+    let isValid = true;
+
+    if(rules.required) {
+      isValid = value.trim() !=='' && isValid;
+
+    }
+
+    if(rules.minLength){
+      isValid = value.length >= rules.minLength && isValid;
+    }
+
+    if(rules.maxLength){
+      isValid = value.length <= rules.maxLength && isValid;
+    }
+
+    return isValid
+
+ } 
 
   inputChangedHandler = (event, inputIdentifier) => {
 
@@ -140,12 +195,25 @@ export class ContactData extends Component {
     }
 
     updatedInputData.value = event.target.value;
+    updatedInputData.valid = this.checkValidity(updatedInputData.value,updatedInputData.validation);
+    updatedInputData.touched = true
+    console.log(updatedInputData)
     updatedFormData[inputIdentifier] = updatedInputData;
 
+    let isFormValid = true
+
+    for(let formItem in updatedFormData){
+       
+      isFormValid = updatedFormData[formItem].valid && isFormValid;
+      console.log(isFormValid)
+    }
+
+    console.log("Last",isFormValid)
 
     this.setState({
 
-      orderForm: updatedFormData
+      orderForm: updatedFormData,
+      isFormValid: isFormValid,
 
     })
   }
@@ -159,6 +227,9 @@ export class ContactData extends Component {
           elementType={this.state.orderForm[item].elementType}
           elementConfig={this.state.orderForm[item].elementConfig}
           value={this.state.orderForm[item].value}
+          invalid={!this.state.orderForm[item].valid}
+          shouldValidate= {this.state.orderForm[item].validation}
+          touched={this.state.orderForm[item].touched}
           changed={(event) => this.inputChangedHandler(event, item)}
         />
       );
@@ -193,7 +264,7 @@ export class ContactData extends Component {
           placeholder="Postal Code"
         /> */}
 
-        <Button btnType="Success" >
+        <Button btnType="Success" disabled={!this.state.isFormValid}>
           ORDER
         </Button>
       </form>

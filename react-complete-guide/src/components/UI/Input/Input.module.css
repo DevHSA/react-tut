@@ -32,3 +32,9 @@
     outline: none;
     background-color: #CCC;
 }
+
+.Invalid {
+
+    border: 1px solid red;
+    background-color: salmon;
+}
